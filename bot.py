@@ -46,7 +46,11 @@ def help_command(update: Update, context: CallbackContext) -> None:
 
 def search(update: Update, context: CallbackContext) -> None:
     """Echo the user message."""
-    update.message.reply_text(update.message.text)
+    from googlesearch.googlesearch import GoogleSearch
+    import requests
+    user = update.message.text
+    get_user = request.get(user)
+    response = GoogleSearch().search(get_user)
 
 
 def main() -> None:
@@ -62,7 +66,7 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("help", help_command))
 
     # on non command i.e message - echo the message on Telegram
-    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
+    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, search))
 
     # Start the Bot
     updater.start_polling()
